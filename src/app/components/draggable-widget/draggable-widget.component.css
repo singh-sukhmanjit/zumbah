@@ -1,0 +1,13 @@
+.flex-container mat-card {
+    flex: 0 0 15em;
+}
+
+mat-card {
+    box-shadow: 0 2px 4px 1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12) !important;
+    border-radius: 6px;
+}
+
+.widget-content {
+    font-size: 2rem;
+    float: right;
+}

@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="flex-container">
+    <mat-card id="widget" cdkDrag cdkDragBoundary=".container" [cdkDragDisabled]="!isDraggable"
+      (cdkDragEnded)="onDragEnded($event)">
+      <mat-card-subtitle>
+        Widget
+      </mat-card-subtitle>
+      <mat-card-content>
+        <p class="widget-content">
+          0.1546
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

@@ -1,0 +1,15 @@
+<mat-toolbar>
+    <span>Zumbah Widget</span>
+    <span class="fill-remaining-space"></span>
+    <button *ngIf="!isDraggable" mat-button (click)="setDraggable(true)">
+      <mat-icon>lock_open</mat-icon>
+    </button>
+    <ng-container *ngIf="isDraggable">
+        <button mat-button (click)="savePosition()">
+            <mat-icon>lock</mat-icon>
+        </button>
+        <button mat-button (click)="undoPosition()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </ng-container>
+</mat-toolbar>
