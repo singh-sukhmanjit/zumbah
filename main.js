@@ -1,9 +1,10 @@
 const { app, BrowserWindow } = require('electron')
-
+const path = require('path');
 let win;
 
 function createWindow () {
   // Create the browser window.
+
   win = new BrowserWindow({
     width: 1000,
     height: 720,
@@ -15,10 +16,10 @@ function createWindow () {
   })
 
 
-  win.loadFile(`${__dirname}/dist/index.html`)
+  win.loadURL(path.resolve(__dirname, 'dist/index.html'));
 
   //// uncomment below to open the DevTools.
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   // Event when the window is closed.
   win.on('closed', function () {
