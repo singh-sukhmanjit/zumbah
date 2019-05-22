@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -9,9 +10,9 @@ import { SharedService } from 'src/app/services/shared.service';
 export class DraggableWidgetComponent implements OnInit {
 
   isDraggable: boolean;
-  points;
-  tempPoints;
-  tempElem;
+  points: { x: number, y: number };
+  tempPoints: { x: number, y: number };
+  tempElement: any;
 
   constructor(
     private sharedSvc: SharedService
@@ -20,30 +21,30 @@ export class DraggableWidgetComponent implements OnInit {
     this.tempPoints = {x: 0, y: 0};
   }
 
-  onDragEnded(e) {
-    const element = e.source.getRootElement().style.transform;
+  onDragEnded(e: CdkDragEnd) {
+    const { source } = e;
+    this.tempElement = source;
+    const { transform } = this.tempElement.getRootElement().style;
     const regex = /translate3d\(\s?(?<x>[-]?\d*)px,\s?(?<y>[-]?\d*)px,\s?(?<z>[-]?\d*)px\)/;
-    const { x, y } = regex.exec(element).groups;
-    this.tempPoints = {x: +x, y: +y};
-    this.tempElem = e.source;
+    const { x, y } = regex.exec(transform).groups;
+    this.tempPoints = { x: +x, y: +y };
   }
 
   savePosition() {
-    this.points = {...this.tempPoints};
+    this.points = { ...this.tempPoints };
   }
 
   undoPosition() {
+    const { x, y } = this.points;
     const widgetElement = document.getElementById('widget');
-    widgetElement.style.transform = `translate3d(${this.points.x}px, ${this.points.y}px, 0px)`;
-    if (this.tempElem) {
-      this.tempElem._dragRef._passiveTransform = {...this.points};
+    widgetElement.style.transform = `translate3d(${x}px, ${y}px, 0px)`;
+    if (this.tempElement) {
+      this.tempElement._dragRef._passiveTransform = { x, y };
     }
   }
 
   draggableObs() {
-    this.sharedSvc.isDraggable$.subscribe(val => {
-      this.isDraggable = val;
-    })
+    this.sharedSvc.isDraggable$.subscribe(val => this.isDraggable = val);
   }
 
   positionObs() {
@@ -53,7 +54,7 @@ export class DraggableWidgetComponent implements OnInit {
       } else if (val === 'undo') {
         this.undoPosition();
       }
-    })
+    });
   }
 
   ngOnInit() {

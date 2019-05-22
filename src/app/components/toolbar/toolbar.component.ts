@@ -9,29 +9,24 @@ import { SharedService } from 'src/app/services/shared.service';
 export class ToolbarComponent implements OnInit {
 
   isDraggable: boolean;
-  constructor(
-    private sharedSvc: SharedService
-  ) {
-  }
+  constructor(private sharedService: SharedService) {}
 
   setDraggable(val: boolean) {
-    this.sharedSvc.setDraggable$(val);
+    this.sharedService.setDraggable$(val);
   }
 
   savePosition() {
-    this.sharedSvc.setPosition$('save');
-    this.sharedSvc.setDraggable$(false);
+    this.sharedService.setPosition$('save');
+    this.sharedService.setDraggable$(false);
   }
 
   undoPosition() {
-    this.sharedSvc.setPosition$('undo');
-    this.sharedSvc.setDraggable$(false);
+    this.sharedService.setPosition$('undo');
+    this.sharedService.setDraggable$(false);
   }
 
   ngOnInit() {
-    this.sharedSvc.isDraggable$.subscribe(val => {
-      this.isDraggable = val;
-    })
+    this.sharedService.isDraggable$.subscribe(val => this.isDraggable = val);
   }
 
 }

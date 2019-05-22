@@ -12,7 +12,7 @@ export class SharedService {
   setDraggable$(val: boolean) {
     this.isDraggable$.next(val);
   }
-  
+
   setPosition$(val: string) {
     this.position$.next(val);
   }
